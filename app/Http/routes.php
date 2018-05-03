@@ -13,7 +13,6 @@ use App\User;
     Route::post('/password/email','Auth\PasswordController@postEmail');
     Route::get('/password/reset/{token}','Auth\PasswordController@getReset');
     Route::post('/password/reset','Auth\PasswordController@postReset');
-    Route::get('/next-page','AssignmentController@postplaceform');
 
     /* SocialLogin */
     Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
@@ -252,7 +251,7 @@ use App\User;
     Route::get('/dissertation-writing-services', function () {
     return view('/main-site-pages.services.dissertation-writing-services');
     });
-    Route::get('/economics', function () {
+    Route::get('/economics-Assignment-Help', function () {
     return view('/main-site-pages.services.economics');
     });
     Route::get('/essay-help', function () {
@@ -261,13 +260,13 @@ use App\User;
     Route::get('/essay-writing-services', function () {
     return view('/main-site-pages.services.essay-writing-services');
     });
-    Route::get('/finance', function () {
+    Route::get('/finance-Assignment-Help', function () {
     return view('/main-site-pages.services.finance');
     });
     Route::get('/thesis-writing-services', function () {
     return view('/main-site-pages.services.thesis-writing-services');
     });
-    Route::get('/management', function () {
+    Route::get('/management-studies', function () {
     return view('/main-site-pages.services.management-studies');
     });
     Route::get('/computer-engineering', function () {
@@ -357,7 +356,7 @@ use App\User;
     Route::get('/information-technology-assignment-writing-help', function () {
     return view('/main-site-pages.services.information-technology-assignment-writing-help');
     });
-    Route::get('/law', function () {
+    Route::get('/law-case-study-help', function () {
     return view('/main-site-pages.services.law-case-study-help');
     });
     Route::get('/literature-essay', function () {
@@ -384,11 +383,11 @@ use App\User;
     Route::get('/persuasive-essay', function () {
     return view('/main-site-pages.services.persuasive-essay');
     });
-    Route::get('/programming', function () {
+    Route::get('/programming-language-assignment-help', function () {
     return view('/main-site-pages.services.programming-language-assignment-help');
     });
-    Route::get('/assignment-help', function () {
-    return view('/main-site-pages.services.assignment-help');
+    Route::get('/project-management-assignment-help', function () {
+    return view('/main-site-pages.services.project-management-assignment-help');
     });
     Route::get('/public-relations-management-assignment-help', function () {
     return view('/main-site-pages.services.public-relations-management-assignment-help');
@@ -762,7 +761,7 @@ use App\User;
 /* **End of Authenticated UserMiddleware**  */
 
 /*  **Web Services without Authentication** */
-    Route::post('/place-order/check/user', 'WebServices\PlaceOrderController@checkUser');
+    Route::any('/place-order/check/user', 'WebServices\PlaceOrderController@checkUser');
     Route::get('/search-admin-student-id', 'AdminControllers\SearchAdminController@serachStudentById');
     Route::post('/create-user-from-place-order-page', 'WebServices\PlaceOrderController@createUserAndRedirectToDashboard');  
     Route::get('/send/push', 'WebServices\PlaceOrderController@sendPush');

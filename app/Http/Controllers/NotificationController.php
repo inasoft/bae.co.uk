@@ -46,7 +46,7 @@ class NotificationController extends Controller
          {
          $emailFrom ='contact@bestassignmentexperts.com';
          $name= 'From BEST ASSIGNMENT EXPERTS';
-         $email_to='bestassignmentexperts@gmail.com';
+         $email_to='aakash6590@gmail.com';
          $subject='Congratulations, You got a new order '.$order;
            Mail::raw('Assignement id for the request is : '.  $order  .  ' RequesterName : ' . $nam ,  function($message) use($emailFrom,$name,$email_to,$subject)
            {

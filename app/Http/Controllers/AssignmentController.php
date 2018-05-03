@@ -24,7 +24,59 @@ use App\Http\Controllers\CommentController;
 
 class AssignmentController extends Controller
 {
- 
+  public function createUserAndRedirectToDashboard(Request $request)
+    {
+      //dd($request->all());
+         $response = new SendResponseController();  
+               
+       $email_id    = $request->email;
+       $no_of_pages =  $request->count;
+      
+            
+       $file1        =      \Illuminate\Support\Facades\Request::file('image');
+      
+       $file2        ='';
+       $file3        ='';
+       $due_date    =  strtotime($request->due_date);
+       $subject     = $request->subject;
+       $ref_style   = $request->place_order_reference;
+       $expert      = 'expert';//$place_order_data_data_value['order_details']['expert'];
+       $description = $request->description;
+       $mobile_no =  $request->phone;
+      
+      
+        //Auth::logout();
+        //$email_id=';
+        $plain_password     =str_random(5);
+        $enccrypted_password=bcrypt($plain_password);
+      
+        $user_id=DB::table('users')->insertGetId(['name'=>'Hello Guest', 'email'=>$email_id,'password'=>$enccrypted_password,'profile_image'=>'public/profile_pics/graduate.png','contact_no'=>$mobile_no]);
+        if($user_id)
+        {   
+        $unique_referral_code = strtoupper(substr('ANY',0,3)).'~'.$user_id.'~'. strtoupper(str_random(5));
+        DB::table('user_referral')->insert(['uid' => $user_id, 'referral_code' => $unique_referral_code,'time'=>time()]);
+        DB::table('role_user')->insert(['role_id'=>3,'user_id'=>$user_id]);
+        }
+        $user_object=User::find($user_id);
+        Auth::login($user_object);
+        
+           $get_assignment_id=$assignmentObj->insertValuesInAssignment($user_id, $due_date, $subject, $no_of_pages, $ref_style, $expert, $description, $file1, $file2, $file3,"place_order_form");  
+           // Use Mail Function Here
+                $send_mail['send_to']   =$email_id;
+                $send_mail['name']      =$email_id;
+                $send_mail['subject']   ="Your Order with Registration placed successfully";
+                $send_mail_array[]=$send_mail;
+
+                $variables['welcome_name']  = $email_id.' (Set your name from your dashboard profile page)';
+                $variables['order_id']      = $response->getAssignmentAsOrderId($get_assignment_id,$user_id);
+                $variables['referral_code'] = $unique_referral_code;
+                $variables['password']      = $plain_password;
+                $variables_array[]=$variables;
+
+                $notification->sendMail($send_mail_array, 'emails.place-order-registration', $variables_array);
+           //End of mail Function 
+           return redirect('/users/dashboard');
+           }        
      public function putAssignmetData(Request $request)
      {  
          

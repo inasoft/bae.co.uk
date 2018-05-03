@@ -151,6 +151,7 @@
 <script type="text/javascript" src="{{('main_theme/js/timepicker.js')}}"></script>
 <script type="text/javascript" src="{{('main_theme/js/tweetie.js')}}"></script>
 <script type="text/javascript" src="{{('main_theme/js/script.js')}}"></script>
+
 <script>
 $(window).scroll(function(){
   //more then or equals to

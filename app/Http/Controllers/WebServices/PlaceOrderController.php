@@ -5,6 +5,9 @@ use App\Http\Controllers\SendResponseController;
 use Symfony\Component\HttpFoundation\Request;
 use DB;
 use Auth;
+use Validator;
+use Redirect;
+
 use Pusher;
 use Plivo\RestAPI;
 use Alert;
@@ -72,9 +75,16 @@ class PlaceOrderController extends Controller
      public function createUserAndRedirectToDashboard(Request $request)
     {
          $response = new SendResponseController();
+          $place_order = @file_get_contents('php://input');
+         $place_order_data = json_decode($place_order, true);
+        //  if(!isset($place_order_data['order_info']['phone']))
+        // {
+       //      return  redirect('/')->with('status','Phone Number is Required');
+       //  }
       //{"order_details":{"email":"nn@b3rtyhj.dfgvbnfg","subject":"fgvbn","duedate":"12/23/2016"},"page_no":1,"order_info":{"file":"C:\\fakepath\\V_20161103_141448.mp4","reference":"ghfh","phone":"4531356896532","description":"ghnb"}}
          
-         
+                         
+
                     
         $assignmentObj=new AssignmentController();
         $response = new SendResponseController();
@@ -83,8 +93,9 @@ class PlaceOrderController extends Controller
                
        $email_id    =  Session::get('email');
        $no_of_pages =  Session::get('no_of_pages');
-      
-            
+        $newname    =  explode("@", $email_id );
+          $new       =   $newname[0];
+         // dd( $new );
        $file1        =      \Illuminate\Support\Facades\Request::file('uploaded_file1');
       
        $file2        ='';
@@ -95,7 +106,7 @@ class PlaceOrderController extends Controller
        $expert      = 'expert';//$place_order_data_data_value['order_details']['expert'];
        $description = Input::get('description');
        $mobile_no =   Input::get('phone');
-      
+       $country_code =   Input::get('country_code');
       
         //Auth::logout();
         //$email_id=';
@@ -104,7 +115,7 @@ class PlaceOrderController extends Controller
         try
         {
         
-        $user_id=DB::table('users')->insertGetId(['name'=>'Hello Guest', 'email'=>$email_id,'password'=>$enccrypted_password,'profile_image'=>'public/profile_pics/graduate.png','contact_no'=>$mobile_no]);
+        $user_id=DB::table('users')->insertGetId(['name'=>  $new , 'email'=>$email_id,'password'=>$enccrypted_password,'profile_image'=>'public/profile_pics/graduate.png','contact_no'=>$mobile_no,'country_code'=>$country_code]);
         if($user_id)
         {   
         $unique_referral_code = strtoupper(substr('ANY',0,3)).'~'.$user_id.'~'. strtoupper(str_random(5));
@@ -129,7 +140,7 @@ class PlaceOrderController extends Controller
 
                 $notification->sendMail($send_mail_array, 'emails.place-order-registration', $variables_array);
            //End of mail Function 
-           return redirect('/users/dashboard');
+           return redirect('/users/dashboard')->with('status', 'file name should less then 45 and extension should be jpg ,png zip pdf xcl docx');
         }
         catch(\Exception $ex)
         {

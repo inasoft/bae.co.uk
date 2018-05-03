@@ -8,8 +8,8 @@ body {
 
 .stepform {
   padding: 20px;
-  background: #fafbfc;
-  border: 1px solid #cfd6e7;
+  background: transparent;
+  border: 1px solid transparent;
 }
 
 /*************** Plugin ***************/

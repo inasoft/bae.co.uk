@@ -27,15 +27,14 @@
 <link rel="stylesheet" href="{{('main_theme/css/colors/default.css')}}">
 <!-- Responsive stylesheet -->
 <link rel="stylesheet" href="{{('main_theme/css/responsive.css')}}">
+<link rel="stylesheet" href="{{('main_theme/Resources/css/style-default.min.css')}}">
 <!-- Title -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>B</title>
 
 </head>
 <div class="wrapper">
-    <div class="preloader">
-        <div class="preloader_container"></div>
-    </div>
+   
      <div class="header-top">
         <div class="container">
             <div class="row">
